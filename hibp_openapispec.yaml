@@ -9,13 +9,13 @@ servers:
     - url: https://api.pwnedpasswords.com/
 
 paths:
-    /range/{first5hashchars}:
+    /range/{hash}:
         get:
             operationId: passwordPwnedOrNot
             summary: Check whether the password is pwned or not
             parameters:
                 - in: path
-                  name: first5hashchars
+                  name: hash
                   schema: 
                       type: string
                   required: true
