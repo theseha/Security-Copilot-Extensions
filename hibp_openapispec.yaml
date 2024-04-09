@@ -9,7 +9,7 @@ servers:
     - url: https://api.pwnedpasswords.com/
 
 paths:
-    /range/{first 5 hash chars}:
+    /range/{first5hashchars}:
         get:
             operationId: passwordPwnedOrNot
             summary: Check whether the password is pwned or not
