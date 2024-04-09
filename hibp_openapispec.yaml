@@ -1,0 +1,30 @@
+openapi: 3.0.0
+
+info:
+    title: Have I Been Pwned
+    dscription: Skills for checking whether a specific password is breached by looking up the list of breached passwords database
+    version: v3
+
+servers:
+    - url: https://api.pwnedpasswords.com/
+
+paths:
+    /range/{first 5 hash chars}:
+        get:
+            operationId: passwordPwnedOrNot
+            summary: Check whether the password is pwned or not
+            response:
+                200:
+                    description: OK - everything worked and there's a string array of pwned sites for the account
+                400:
+                    description: Bad request - the account does not comply with an acceptable format (i.e. it's an empty string)
+                401:
+                    description: Unauthorised - either no API key was provided or it wasn't valid
+                403:
+                    description: Forbidden - no user agent has been specified in the request
+                404:
+                    description: Not found - the account could not be found and has therefore not been pwned
+                429:
+                    description: Too many requests - the rate limit has been exceeded
+                503:
+                    description: Service unavailable - usually returned by Cloudflare if the underlying service is not available
