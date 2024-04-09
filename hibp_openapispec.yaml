@@ -3,7 +3,7 @@ openapi: 3.0.0
 info:
     title: Have I Been Pwned
     dscription: Skills for checking whether a specific password is breached by looking up the list of breached passwords database
-    version: v3
+    version: "1.0.0"
 
 servers:
     - url: https://api.pwnedpasswords.com/
@@ -13,7 +13,7 @@ paths:
         get:
             operationId: passwordPwnedOrNot
             summary: Check whether the password is pwned or not
-            response:
+            responses:
                 200:
                     description: OK - everything worked and there's a string array of pwned sites for the account
                 400:
