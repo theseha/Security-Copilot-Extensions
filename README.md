@@ -1,4 +1,4 @@
-Microsoft Copilot for Security
+[Microsoft Copilot for Security]
 
 As of 1st April, Microsoft Copilot for Security has been generally available, which will help security team in 3 ways, Scalability, Speed and Skill.
 
