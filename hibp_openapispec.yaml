@@ -14,7 +14,7 @@ paths:
             operationId: passwordPwnedOrNot
             summary: Check whether the password is pwned or not
             parameters:
-                - in: query
+                - in: path
                   name: first5hashchars
                   schema: 
                       type: string
