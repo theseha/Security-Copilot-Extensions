@@ -15,7 +15,7 @@ paths:
             summary: Check whether the password is pwned or not
             parameters:
                 - in: query
-                  name: first 5 hash chars
+                  name: first5hashchars
                   schema: 
                       type: string
                   required: true
