@@ -13,6 +13,13 @@ paths:
         get:
             operationId: passwordPwnedOrNot
             summary: Check whether the password is pwned or not
+            parameters:
+                - in: path
+                  name: first 5 hash chars
+                  schema: 
+                      type: string
+                  required: true
+                  description: the first 5 hash of a password to look up
             responses:
                 200:
                     description: OK - everything worked and there's a string array of pwned sites for the account
