@@ -1,0 +1,9 @@
+Descriptor:
+  Name: Have I Been Pwned
+  DisplayName: Have I been Pwned
+  Description: Skills for checking whether a specific password is breached by looking up the list of breached passwords database  
+
+SkillGroups:
+  - Format: API
+    Settings:
+      OpenApiSpecUrl: https://raw.githubusercontent.com/theseha/Copilot-for-Security-Plugin/main/hibp_openapispec.yaml
