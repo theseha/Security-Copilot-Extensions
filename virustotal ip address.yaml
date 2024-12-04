@@ -12,5 +12,5 @@ Descriptor:
 
 SkillGroups:
   - Format: API
-  Settings:
-    OpenApiSpecUrl: https://raw.githubusercontent.com/theseha/Copilot-for-Security-Plugin/refs/heads/main/virustotal%20ip%20address_openapi.yaml
+    Settings:
+      OpenApiSpecUrl: https://raw.githubusercontent.com/theseha/Copilot-for-Security-Plugin/refs/heads/main/virustotal%20ip%20address_openapi.yaml
