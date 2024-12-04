@@ -11,7 +11,7 @@ servers:
 paths:
     /ip_addresses/{ip}:
         get:
-            operationId: getVirustTotalIP
+            operationId: get_Virus_Total_IP
             summary: Get Virus Total IP Information for a particular IP Address.
             parameters:
                 - in: path
