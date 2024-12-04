@@ -1,0 +1,29 @@
+openapi: 3.0.0
+
+info:
+    title: Get Virus Total IP information
+    description: Get Information about an IP from Virus Total
+    version: "v1"
+
+servers:
+    - url: https:/www.virustotal.com/api
+  
+paths:
+    /v3/ip_addresses/{ip}:
+        get:
+            operationId: getVirustTotalIP
+            summary: Get Virus Total IP Information for a particular IP Address.
+            parameters:
+                - in: path
+                  name: ip
+                  schema:
+                      type: string
+                  required: true
+                  description: The ip address to Lookup
+            responses:
+                200:
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/getVTIPResponse"
