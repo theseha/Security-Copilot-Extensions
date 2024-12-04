@@ -1,0 +1,16 @@
+Descriptor:
+  Name: Virus Total IP Lookup
+  DisplayName: Virus Total IP Lookup
+  Description: Get detailed information from Virus Total about an IP Address.
+  SupportedAuthTypes:
+    - ApiKey
+  Authorization:
+    Type: APIKey
+    Key: x-apikey
+    Location: Header
+    AuthScheme: ''
+
+SkillGroups:
+  - Format: API
+  Settings:
+    OpenApiSpecUrl: https://raw.githubusercontent.com/theseha/Copilot-for-Security-Plugin/refs/heads/main/API-GetVirusTotalIP-OAPI.yaml

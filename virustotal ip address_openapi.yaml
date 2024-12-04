@@ -1,0 +1,29 @@
+openapi: 3.0.0
+
+info:
+    title: Get Virus Total IP information
+    description: Get Information about an IP from Virus Total
+    version: "v1"
+
+servers:
+    - url: https://www.virustotal.com/api/v3
+  
+paths:
+    /ip_addresses/{ip}:
+        get:
+            operationId: getVirusTotalIP
+            summary: Get Virus Total IP Information for a particular IP Address.
+            parameters:
+                - in: path
+                  name: ip
+                  schema:
+                      type: string
+                  required: true
+                  description: An ip address to Lookup
+            responses:
+                200:
+                    description: OK
+                400:
+                    description: Invalid Argument Error
+                401:
+                    description: Wrong API Key
