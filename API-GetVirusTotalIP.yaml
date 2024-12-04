@@ -17,4 +17,4 @@ Descriptor:
 SkillGroups:
   - Format: API
     Settings:
-      OpenApiSpecUrl: https://raw.githubusercontent.com/SCStelz/CopilotForSecurity/main/CustomPlugIns/API-GetVirusTotalIP/OpenAPI/API-GetVirusTotalIP-OAPI.yaml
+      OpenApiSpecUrl: https://raw.githubusercontent.com/theseha/Copilot-for-Security-Plugin/refs/heads/main/API-GetVirusTotalIP-OAPI.yaml
