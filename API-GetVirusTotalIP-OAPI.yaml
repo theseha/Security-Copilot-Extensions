@@ -27,3 +27,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/getVTIPResponse"
+                401:
+                    description: Wrong API Key
+                    content:
+                        application/json: {}
