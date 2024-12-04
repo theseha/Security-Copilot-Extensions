@@ -27,6 +27,10 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/getVTIPResponse"
+                400:
+                    description: Invalid Argument Error
+                    content:
+                        application/json: {}
                 401:
                     description: Wrong API Key
                     content:
