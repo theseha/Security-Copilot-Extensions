@@ -6,10 +6,10 @@ info:
     version: "v1"
 
 servers:
-    - url: https:/www.virustotal.com/api
+    - url: https:/www.virustotal.com/api/v3
   
 paths:
-    /v3/ip_addresses/{ip}:
+    /ip_addresses/{ip}:
         get:
             operationId: getVirustTotalIP
             summary: Get Virus Total IP Information for a particular IP Address.
