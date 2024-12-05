@@ -12,14 +12,15 @@ paths:
     /ip_addresses/{ip}:
         get:
             operationId: getVirusTotalIP
-            summary: Get Virus Total IP Information for a particular IP Address.
+            description: |
+              Get Virus Total IP Information for a particular IP Address
             parameters:
                 - in: path
                   name: ip
                   schema:
                       type: string
                   required: true
-                  description: An ip address to Lookup
+                  description: IP address to Lookup (e.g. 216.239.36.21)
             responses:
                 200:
                     description: OK
