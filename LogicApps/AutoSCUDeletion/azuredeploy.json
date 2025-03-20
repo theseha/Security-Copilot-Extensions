@@ -2,8 +2,8 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "workflows_resource_creation_and_deletion_name": {
-            "defaultValue": "resource_creation_and_deletion",
+        "workflows_resource_deletion_name": {
+            "defaultValue": "resource_deletion",
             "type": "String"
         },
         "capacitiesName": {
@@ -13,18 +13,18 @@
                 "description": "The name of the Security Copilot capacity."
             }
         },
-	"accessToken": {
-	    "type": "String",
-	    "metadata": {
-		"description": "Access token for authentication."
-	    }
-	}
+		"accessToken": {
+		    "type": "String",
+			"metadata": {
+				"description": "Access token for authentication."
+			}
+		}
     },
     "resources": [
         {
             "type": "Microsoft.Logic/workflows",
             "apiVersion": "2017-07-01",
-            "name": "[parameters('workflows_resource_creation_and_deletion_name')]",
+            "name": "[parameters('workflows_resource_deletion_name')]",
             "location": "[resourceGroup().location]",
             "properties": {
                 "state": "Enabled",
