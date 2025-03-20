@@ -13,4 +13,4 @@ You can enter the token when it is requested on Azure Portal.
 
 Hope it helps.
 
-![Logic App Designer] (https://raw.githubusercontent.com/theseha/Copilot-for-Security-Plugin/main/LogicApps/AutoSCUDeletion/delete.png)
+![Logic App Designer](https://raw.githubusercontent.com/theseha/Copilot-for-Security-Plugin/main/LogicApps/AutoSCUDeletion/delete.png)
