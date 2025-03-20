@@ -83,7 +83,7 @@
                             "runAfter": {},
                             "type": "Http",
                             "inputs": {
-                                "uri": "https://management.azure.com/subscriptions/e1a06fcc-f6a3-425c-a76d-11a070aeb9e6/resourceGroups/RG-SecCopilot/providers/microsoft.securitycopilot/capacities/sehasc?api-version=2023-12-01-preview",
+                                "uri": "https://management.azure.com/subscriptions/{subscription-id}/resourceGroups/RG-SecCopilot/providers/microsoft.securitycopilot/capacities/sehasc?api-version=2023-12-01-preview",
                                 "method": "GET",
                                 "headers": {
                                     "Authorization": "Bearer {accessToken}"
@@ -157,7 +157,7 @@
                     "$connections": {
                         "value": {
                             "arm": {
-                                "id": "/subscriptions/e1a06fcc-f6a3-425c-a76d-11a070aeb9e6/providers/Microsoft.Web/locations/centralus/managedApis/arm",
+                                "id": "/subscriptions/{subscription-id}/providers/Microsoft.Web/locations/centralus/managedApis/arm",
                                 "connectionId": "[parameters('connections_arm_externalid')]",
                                 "connectionName": "arm"
                             }
