@@ -15,27 +15,40 @@
                 "description": "Resource Group Name"
             }
         },
+        "logicAppName": {
+            "type": "string",
+            "defaultValue": "my-logic-app",
+            "metadata": {
+                "description": "Logic App Name"
+            }
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().location]",
+            "metadata": {
+                "description": "Azure Location"
+            }
+        },
         "capacitiesName": {
             "type": "string",
             "metadata": {
-                "description": "Your Security Copilot Capacity Name"
+                "description": "Security Copilot Capacity Name"
             }
         },
-        "workflows_resource_creation_and_deletion_name": {
-            "defaultValue": "resource_creation_and_deletion",
-            "type": "String"
-        },
         "connections_arm_externalid": {
+            "type": "string",
             "defaultValue": "[concat('/subscriptions/', parameters('subscriptionId'), '/resourceGroups/', parameters('resourceGroupName'), '/providers/Microsoft.Web/connections/arm')]",
-            "type": "String"
+            "metadata": {
+                "description": "ARM API Connection ID"
+            }
         }
     },
     "resources": [
         {
             "type": "Microsoft.Logic/workflows",
             "apiVersion": "2017-07-01",
-            "name": "[parameters('workflows_resource_creation_and_deletion_name')]",
-            "location": "centralus",
+            "name": "[parameters('logicAppName')]",
+            "location": "[parameters('location')]",
             "properties": {
                 "state": "Enabled",
                 "definition": {
