@@ -14,12 +14,14 @@
                 "description": "Your Azure Bearer Access Token"
             }
         },
-        "workflows_resource_creation_and_deletion_name": {
-            "defaultValue": "resource_creation_and_deletion",
-            "type": "String"
+        "capacitiesName": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of the Security Copilot Capacity"
+            }
         },
         "connections_arm_externalid": {
-            "defaultValue": "/subscriptions/{subscription-id}/resourceGroups/RG-SecCopilot/providers/Microsoft.Web/connections/arm",
+            "defaultValue": "[concat('/subscriptions/', parameters('subscriptionId'), '/resourceGroups/RG-SecCopilot/providers/Microsoft.Web/connections/arm')]",
             "type": "String"
         }
     },
@@ -28,7 +30,7 @@
         {
             "type": "Microsoft.Logic/workflows",
             "apiVersion": "2017-07-01",
-            "name": "[parameters('workflows_resource_creation_and_deletion_name')]",
+            "name": "resource_creation_and_deletion",
             "location": "centralus",
             "properties": {
                 "state": "Enabled",
@@ -48,39 +50,9 @@
                                 "frequency": "Week",
                                 "timeZone": "Korea Standard Time",
                                 "schedule": {
-                                    "weekDays": [
-                                        "Monday",
-                                        "Tuesday",
-                                        "Wednesday",
-                                        "Thursday",
-                                        "Friday"
-                                    ],
-                                    "hours": [
-                                        17
-                                    ],
-                                    "minutes": [
-                                        55
-                                    ]
-                                }
-                            },
-                            "evaluatedRecurrence": {
-                                "interval": 1,
-                                "frequency": "Week",
-                                "timeZone": "Korea Standard Time",
-                                "schedule": {
-                                    "weekDays": [
-                                        "Monday",
-                                        "Tuesday",
-                                        "Wednesday",
-                                        "Thursday",
-                                        "Friday"
-                                    ],
-                                    "hours": [
-                                        17
-                                    ],
-                                    "minutes": [
-                                        55
-                                    ]
+                                    "weekDays": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+                                    "hours": [17],
+                                    "minutes": [55]
                                 }
                             },
                             "type": "Recurrence"
@@ -91,23 +63,16 @@
                             "runAfter": {},
                             "type": "Http",
                             "inputs": {
-                                "uri": "[concat('https://management.azure.com/subscriptions/', parameters('subscriptionId'), '/resourceGroups/RG-SecCopilot/providers/microsoft.securitycopilot/capacities/sehasc?api-version=2023-12-01-preview')]",
+                                "uri": "[concat('https://management.azure.com/subscriptions/', parameters('subscriptionId'), '/resourceGroups/RG-SecCopilot/providers/microsoft.securitycopilot/capacities/', parameters('capacitiesName'), '?api-version=2023-12-01-preview')]",
                                 "method": "GET",
                                 "headers": {
                                     "Authorization": "[concat('Bearer ', parameters('accessToken'))]"
-                                }
-                            },
-                            "runtimeConfiguration": {
-                                "contentTransfer": {
-                                    "transferMode": "Chunked"
                                 }
                             }
                         },
                         "Initialize_variable": {
                             "runAfter": {
-                                "HTTP": [
-                                    "Succeeded"
-                                ]
+                                "HTTP": ["Succeeded"]
                             },
                             "type": "InitializeVariable",
                             "inputs": {
@@ -131,7 +96,7 @@
                                             }
                                         },
                                         "method": "delete",
-                                        "path": "[concat('/subscriptions/', parameters('subscriptionId'), '/resourceGroups/RG-SecCopilot/providers/Microsoft.SecurityCopilot/capacities/sehasc')]",
+                                        "path": "[concat('/subscriptions/', parameters('subscriptionId'), '/resourceGroups/RG-SecCopilot/providers/Microsoft.SecurityCopilot/capacities/', parameters('capacitiesName'))]",
                                         "queries": {
                                             "x-ms-api-version": "2023-12-01-preview"
                                         }
@@ -139,9 +104,7 @@
                                 }
                             },
                             "runAfter": {
-                                "Initialize_variable": [
-                                    "Succeeded"
-                                ]
+                                "Initialize_variable": ["Succeeded"]
                             },
                             "else": {
                                 "actions": {}
@@ -149,23 +112,19 @@
                             "expression": {
                                 "and": [
                                     {
-                                        "equals": [
-                                            "@variables('provisioned')",
-                                            200
-                                        ]
+                                        "equals": ["@variables('provisioned')", 200]
                                     }
                                 ]
                             },
                             "type": "If"
                         }
-                    },
-                    "outputs": {}
+                    }
                 },
                 "parameters": {
                     "$connections": {
                         "value": {
                             "arm": {
-                                "id": "/subscriptions/{subscription-id}/providers/Microsoft.Web/locations/centralus/managedApis/arm",
+                                "id": "[concat('/subscriptions/', parameters('subscriptionId'), '/providers/Microsoft.Web/locations/centralus/managedApis/arm')]",
                                 "connectionId": "[parameters('connections_arm_externalid')]",
                                 "connectionName": "arm"
                             }
