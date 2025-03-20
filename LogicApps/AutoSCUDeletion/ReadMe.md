@@ -7,6 +7,7 @@ If you are working on daily SCU creation and deletion with Logic Apps, you might
 ```sh
 az login
 az account get-access-token --resource https://management.azure.com/
+```
 
 You can enter the token when it is requested on Azure Portal.
 
