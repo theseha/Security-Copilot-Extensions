@@ -12,3 +12,5 @@ az account get-access-token --resource https://management.azure.com/
 You can enter the token when it is requested on Azure Portal.
 
 Hope it helps.
+
+![Logic App Designer] (https://raw.githubusercontent.com/theseha/Copilot-for-Security-Plugin/main/LogicApps/AutoSCUDeletion/delete.png)
