@@ -2,12 +2,20 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
+        "subscriptionId": {
+            "type": "string",
+            "metadata": {
+                "description": "Your Azure Subscription ID"
+            }
+        },
+        "accessToken": {
+            "type": "securestring",
+            "metadata": {
+                "description": "Your Azure Bearer Access Token"
+            }
+        },
         "workflows_resource_creation_and_deletion_name": {
             "defaultValue": "resource_creation_and_deletion",
-            "type": "String"
-        },
-        "__encodeURIComponent__capacities_sehasc____externalid": {
-            "defaultValue": "/subscriptions/@{encodeURIComponent('{subscription-id}')}/resourceGroups/@{encodeURIComponent('RG-SecCopilot')}/providers/@{encodeURIComponent('Microsoft.SecurityCopilot')}/@{encodeURIComponent('capacities/sehasc')}",
             "type": "String"
         },
         "connections_arm_externalid": {
@@ -83,10 +91,10 @@
                             "runAfter": {},
                             "type": "Http",
                             "inputs": {
-                                "uri": "https://management.azure.com/subscriptions/{subscription-id}/resourceGroups/RG-SecCopilot/providers/microsoft.securitycopilot/capacities/sehasc?api-version=2023-12-01-preview",
+                                "uri": "[concat('https://management.azure.com/subscriptions/', parameters('subscriptionId'), '/resourceGroups/RG-SecCopilot/providers/microsoft.securitycopilot/capacities/sehasc?api-version=2023-12-01-preview')]",
                                 "method": "GET",
                                 "headers": {
-                                    "Authorization": "Bearer {accessToken}"
+                                    "Authorization": "[concat('Bearer ', parameters('accessToken'))]"
                                 }
                             },
                             "runtimeConfiguration": {
@@ -123,7 +131,7 @@
                                             }
                                         },
                                         "method": "delete",
-                                        "path": "[parameters('__encodeURIComponent__capacities_sehasc____externalid')]",
+                                        "path": "[concat('/subscriptions/', parameters('subscriptionId'), '/resourceGroups/RG-SecCopilot/providers/Microsoft.SecurityCopilot/capacities/sehasc')]",
                                         "queries": {
                                             "x-ms-api-version": "2023-12-01-preview"
                                         }
