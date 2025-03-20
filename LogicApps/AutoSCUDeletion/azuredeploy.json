@@ -4,45 +4,43 @@
     "parameters": {
         "subscriptionId": {
             "type": "string",
+            "defaultValue": "[subscription().subscriptionId]",
             "metadata": {
-                "description": "Your Azure Subscription ID"
+                "description": "Azure Subscription ID"
             }
         },
-        "accessToken": {
-            "type": "securestring",
+        "resourceGroupName": {
+            "type": "string",
             "metadata": {
-                "description": "Your Azure Bearer Access Token"
+                "description": "Resource Group Name"
             }
         },
         "capacitiesName": {
             "type": "string",
             "metadata": {
-                "description": "Name of the Security Copilot Capacity"
+                "description": "Your Security Copilot Capacity Name"
             }
         },
+        "workflows_resource_creation_and_deletion_name": {
+            "defaultValue": "resource_creation_and_deletion",
+            "type": "String"
+        },
         "connections_arm_externalid": {
-            "defaultValue": "[concat('/subscriptions/', parameters('subscriptionId'), '/resourceGroups/RG-SecCopilot/providers/Microsoft.Web/connections/arm')]",
+            "defaultValue": "[concat('/subscriptions/', parameters('subscriptionId'), '/resourceGroups/', parameters('resourceGroupName'), '/providers/Microsoft.Web/connections/arm')]",
             "type": "String"
         }
     },
-    "variables": {},
     "resources": [
         {
             "type": "Microsoft.Logic/workflows",
             "apiVersion": "2017-07-01",
-            "name": "resource_creation_and_deletion",
+            "name": "[parameters('workflows_resource_creation_and_deletion_name')]",
             "location": "centralus",
             "properties": {
                 "state": "Enabled",
                 "definition": {
                     "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
                     "contentVersion": "1.0.0.0",
-                    "parameters": {
-                        "$connections": {
-                            "defaultValue": {},
-                            "type": "Object"
-                        }
-                    },
                     "triggers": {
                         "Recurrence": {
                             "recurrence": {
@@ -63,26 +61,11 @@
                             "runAfter": {},
                             "type": "Http",
                             "inputs": {
-                                "uri": "[concat('https://management.azure.com/subscriptions/', parameters('subscriptionId'), '/resourceGroups/RG-SecCopilot/providers/microsoft.securitycopilot/capacities/', parameters('capacitiesName'), '?api-version=2023-12-01-preview')]",
+                                "uri": "[concat('https://management.azure.com/subscriptions/', parameters('subscriptionId'), '/resourceGroups/', parameters('resourceGroupName'), '/providers/Microsoft.SecurityCopilot/capacities/', parameters('capacitiesName'), '?api-version=2023-12-01-preview')]",
                                 "method": "GET",
-                                "headers": {
-                                    "Authorization": "[concat('Bearer ', parameters('accessToken'))]"
+                                "authentication": {
+                                    "type": "ManagedServiceIdentity"
                                 }
-                            }
-                        },
-                        "Initialize_variable": {
-                            "runAfter": {
-                                "HTTP": ["Succeeded"]
-                            },
-                            "type": "InitializeVariable",
-                            "inputs": {
-                                "variables": [
-                                    {
-                                        "name": "provisioned",
-                                        "type": "integer",
-                                        "value": "@outputs('HTTP')?['statusCode']"
-                                    }
-                                ]
                             }
                         },
                         "Condition": {
@@ -96,7 +79,7 @@
                                             }
                                         },
                                         "method": "delete",
-                                        "path": "[concat('/subscriptions/', parameters('subscriptionId'), '/resourceGroups/RG-SecCopilot/providers/Microsoft.SecurityCopilot/capacities/', parameters('capacitiesName'))]",
+                                        "path": "[concat('/subscriptions/', parameters('subscriptionId'), '/resourceGroups/', parameters('resourceGroupName'), '/providers/Microsoft.SecurityCopilot/capacities/', parameters('capacitiesName'))]",
                                         "queries": {
                                             "x-ms-api-version": "2023-12-01-preview"
                                         }
@@ -104,30 +87,12 @@
                                 }
                             },
                             "runAfter": {
-                                "Initialize_variable": ["Succeeded"]
-                            },
-                            "else": {
-                                "actions": {}
+                                "HTTP": ["Succeeded"]
                             },
                             "expression": {
-                                "and": [
-                                    {
-                                        "equals": ["@variables('provisioned')", 200]
-                                    }
-                                ]
+                                "equals": ["@outputs('HTTP')?['statusCode']", 200]
                             },
                             "type": "If"
-                        }
-                    }
-                },
-                "parameters": {
-                    "$connections": {
-                        "value": {
-                            "arm": {
-                                "id": "[concat('/subscriptions/', parameters('subscriptionId'), '/providers/Microsoft.Web/locations/centralus/managedApis/arm')]",
-                                "connectionId": "[parameters('connections_arm_externalid')]",
-                                "connectionName": "arm"
-                            }
                         }
                     }
                 }
