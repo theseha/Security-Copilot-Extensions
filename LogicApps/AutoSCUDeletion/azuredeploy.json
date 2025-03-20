@@ -13,12 +13,12 @@
                 "description": "The name of the Security Copilot capacity."
             }
         },
-		"accessToken": {
-			"type": "String",
-			"metadata": {
-				"description": "Access token for authentication."
-			}
-		}
+	"accessToken": {
+	    "type": "String",
+	    "metadata": {
+		"description": "Access token for authentication."
+	    }
+	}
     },
     "resources": [
         {
