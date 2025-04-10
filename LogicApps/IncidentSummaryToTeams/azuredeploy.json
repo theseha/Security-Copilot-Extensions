@@ -1,0 +1,205 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {},
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Logic/workflows",
+            "apiVersion": "2017-07-01",
+            "name": "tttt2",
+            "location": "northcentralus",
+            "properties": {
+                "state": "Enabled",
+                "definition": {
+                    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                        "$connections": {
+                            "defaultValue": {},
+                            "type": "Object"
+                        }
+                    },
+                    "triggers": {
+                        "Microsoft_Sentinel_incident": {
+                            "type": "ApiConnectionWebhook",
+                            "inputs": {
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['azuresentinel']['connectionId']"
+                                    }
+                                },
+                                "body": {
+                                    "callback_url": "@listCallbackUrl()"
+                                },
+                                "path": "/incident-creation"
+                            }
+                        }
+                    },
+                    "actions": {
+                        "Post_message_in_a_chat_or_channel": {
+                            "runAfter": {
+                                "Create_HTML_table": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['teams']['connectionId']"
+                                    }
+                                },
+                                "method": "post",
+                                "body": {
+                                    "recipient": {
+                                        "groupId": "b5b73159-e0a7-4d21-a139-8e375a17ea29",
+                                        "channelId": "19:9m2XPh0suguNAqOxjCJNARz38SocXCgam5Nkq2W3kxc1@thread.tacv2"
+                                    },
+                                    "messageBody": "<p class=\"editor-paragraph\">@{body('Create_HTML_table')}</p>"
+                                },
+                                "path": "/beta/teams/conversation/message/poster/Flow bot/location/@{encodeURIComponent('Channel')}",
+                                "retryPolicy": {
+                                    "type": "none"
+                                }
+                            }
+                        },
+                        "Create_HTML_table": {
+                            "runAfter": {
+                                "Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Table",
+                            "inputs": {
+                                "from": "@variables('values')",
+                                "format": "HTML"
+                            }
+                        },
+                        "Submit_a_Security_Copilot_prompt": {
+                            "runAfter": {},
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['securitycopilot']['connectionId']"
+                                    }
+                                },
+                                "method": "post",
+                                "body": {
+                                    "PromptContent": "Summarize Incidents from Sentinel over the last 30 days"
+                                },
+                                "path": "/process-prompt",
+                                "retryPolicy": {
+                                    "type": "none"
+                                }
+                            }
+                        },
+                        "Submit_a_Security_Copilot_prompt_1": {
+                            "runAfter": {
+                                "Submit_a_Security_Copilot_prompt": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['securitycopilot']['connectionId']"
+                                    }
+                                },
+                                "method": "post",
+                                "body": {
+                                    "PromptContent": "/AskGpt Provide the previous Response in the professionaly optimized JSON format with Incident ID, Incident Name, Severity, Status, and created date only without bracket '[]'\n\n\n",
+                                    "SessionId": "@body('Submit_a_Security_Copilot_prompt')?['sessionId']"
+                                },
+                                "path": "/process-prompt",
+                                "retryPolicy": {
+                                    "type": "none"
+                                }
+                            }
+                        },
+                        "Initialize_variable": {
+                            "runAfter": {
+                                "parsedxdr": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "values",
+                                        "type": "array",
+                                        "value": [
+                                            {
+                                                "Incident ID": "@body('parsedxdr')?['Incident ID']",
+                                                "Incident Name": "@body('parsedxdr')?['Incident Name']",
+                                                "Severity": "@body('parsedxdr')?['Severity']",
+                                                "Status": "@body('parsedxdr')?['Status']",
+                                                "Created DateTime UTC": "@body('parsedxdr')?['Created DateTime UTC']"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        },
+                        "parsedxdr": {
+                            "runAfter": {
+                                "Submit_a_Security_Copilot_prompt_1": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "ParseJson",
+                            "inputs": {
+                                "content": "@body('Submit_a_Security_Copilot_prompt_1')?['EvaluationResultContent']",
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "IncidentID": {
+                                            "type": "string"
+                                        },
+                                        "IncidentName": {
+                                            "type": "string"
+                                        },
+                                        "Severity": {
+                                            "type": "string"
+                                        },
+                                        "Status": {
+                                            "type": "string"
+                                        },
+                                        "CreatedDateTimeUTC": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "outputs": {}
+                },
+                "parameters": {
+                    "$connections": {
+                        "value": {
+                            "teams": {
+                                "id": "/subscriptions/b19d330a-74c4-421a-9d68-6eda7546f0f8/providers/Microsoft.Web/locations/northcentralus/managedApis/teams",
+                                "connectionId": "/subscriptions/b19d330a-74c4-421a-9d68-6eda7546f0f8/resourceGroups/RG-SecCopilot2/providers/Microsoft.Web/connections/teams",
+                                "connectionName": "teams"
+                            },
+                            "securitycopilot": {
+                                "id": "/subscriptions/b19d330a-74c4-421a-9d68-6eda7546f0f8/providers/Microsoft.Web/locations/northcentralus/managedApis/securitycopilot",
+                                "connectionId": "/subscriptions/b19d330a-74c4-421a-9d68-6eda7546f0f8/resourceGroups/RG-SecCopilot2/providers/Microsoft.Web/connections/securitycopilot",
+                                "connectionName": "securitycopilot"
+                            },
+                            "azuresentinel": {
+                                "id": "/subscriptions/b19d330a-74c4-421a-9d68-6eda7546f0f8/providers/Microsoft.Web/locations/northcentralus/managedApis/azuresentinel",
+                                "connectionId": "/subscriptions/b19d330a-74c4-421a-9d68-6eda7546f0f8/resourceGroups/RG-SecCopilot2/providers/Microsoft.Web/connections/azuresentinel",
+                                "connectionName": "azuresentinel"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}
