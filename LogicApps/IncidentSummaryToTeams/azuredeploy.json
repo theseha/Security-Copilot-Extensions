@@ -15,21 +15,7 @@
             "metadata": {
                 "description": "The Azure region where the Logic App will be deployed."
             }
-        },
-        "teamsGroupId": {
-            "type": "string",
-            "defaultValue": "b5b73159-e0a7-4d21-a139-8e375a17ea29",
-            "metadata": {
-                "description": "The Group ID of the Microsoft Teams team where the message will be posted."
-            }
-        },
-        "teamsChannelId": {
-            "type": "string",
-            "defaultValue": "19:9m2XPh0suguNAqOxjCJNARz38SocXCgam5Nkq2W3kxc1@thread.tacv2",
-            "metadata": {
-                "description": "The Channel ID of the Microsoft Teams channel where the message will be posted."
-            }
-        }
+        } 
     },
     "variables": {},
     "resources": [
@@ -206,28 +192,7 @@
                         }
                     },
                     "outputs": {}
-                },
-                "parameters": {
-                    "$connections": {
-                        "value": {
-                            "teams": {
-                                "id": "/subscriptions/b19d330a-74c4-421a-9d68-6eda7546f0f8/providers/Microsoft.Web/locations/northcentralus/managedApis/teams",
-                                "connectionId": "/subscriptions/b19d330a-74c4-421a-9d68-6eda7546f0f8/resourceGroups/RG-SecCopilot2/providers/Microsoft.Web/connections/teams",
-                                "connectionName": "teams"
-                            },
-                            "securitycopilot": {
-                                "id": "/subscriptions/b19d330a-74c4-421a-9d68-6eda7546f0f8/providers/Microsoft.Web/locations/northcentralus/managedApis/securitycopilot",
-                                "connectionId": "/subscriptions/b19d330a-74c4-421a-9d68-6eda7546f0f8/resourceGroups/RG-SecCopilot2/providers/Microsoft.Web/connections/securitycopilot",
-                                "connectionName": "securitycopilot"
-                            },
-                            "azuresentinel": {
-                                "id": "/subscriptions/b19d330a-74c4-421a-9d68-6eda7546f0f8/providers/Microsoft.Web/locations/northcentralus/managedApis/azuresentinel",
-                                "connectionId": "/subscriptions/b19d330a-74c4-421a-9d68-6eda7546f0f8/resourceGroups/RG-SecCopilot2/providers/Microsoft.Web/connections/azuresentinel",
-                                "connectionName": "azuresentinel"
-                            }
-                        }
-                    }
-                }
+                }                
             }
         }
     ]
