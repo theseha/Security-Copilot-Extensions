@@ -9,3 +9,5 @@ If you create a Logic App without any granular manipulation, the summary which w
 ![Logic App Designer](https://raw.githubusercontent.com/theseha/Copilot-for-Security-Plugin/main/LogicApps/IncidentSummaryToTeams/teamstable.png)
 
 ![Logic App Designer](https://raw.githubusercontent.com/theseha/Copilot-for-Security-Plugin/main/LogicApps/IncidentSummaryToTeams/IncidentToTeams.png)
+
+![Logic App Designer](https://raw.githubusercontent.com/theseha/Copilot-for-Security-Plugin/main/LogicApps/IncidentSummaryToTeams/copilotprompts.png)
