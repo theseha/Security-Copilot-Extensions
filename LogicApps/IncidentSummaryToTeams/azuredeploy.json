@@ -1,14 +1,43 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
-    "parameters": {},
+    "parameters": {
+        "logicAppName": {
+            "type": "string",
+            "defaultValue": "IncidentToTeamsinTableFormat",
+            "metadata": {
+                "description": "The name of the Logic App to be created."
+            }
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "northcentralus",
+            "metadata": {
+                "description": "The Azure region where the Logic App will be deployed."
+            }
+        },
+        "teamsGroupId": {
+            "type": "string",
+            "defaultValue": "b5b73159-e0a7-4d21-a139-8e375a17ea29",
+            "metadata": {
+                "description": "The Group ID of the Microsoft Teams team where the message will be posted."
+            }
+        },
+        "teamsChannelId": {
+            "type": "string",
+            "defaultValue": "19:9m2XPh0suguNAqOxjCJNARz38SocXCgam5Nkq2W3kxc1@thread.tacv2",
+            "metadata": {
+                "description": "The Channel ID of the Microsoft Teams channel where the message will be posted."
+            }
+        }
+    },
     "variables": {},
     "resources": [
         {
             "type": "Microsoft.Logic/workflows",
             "apiVersion": "2017-07-01",
-            "name": "tttt2",
-            "location": "northcentralus",
+            "name": "[parameters('logicAppName')]",
+            "location": "[parameters('location')]",
             "properties": {
                 "state": "Enabled",
                 "definition": {
@@ -53,8 +82,8 @@
                                 "method": "post",
                                 "body": {
                                     "recipient": {
-                                        "groupId": "b5b73159-e0a7-4d21-a139-8e375a17ea29",
-                                        "channelId": "19:9m2XPh0suguNAqOxjCJNARz38SocXCgam5Nkq2W3kxc1@thread.tacv2"
+                                        "groupId": "[parameters('teamsGroupId')]",
+                                        "channelId": "[parameters('teamsChannelId')]"
                                     },
                                     "messageBody": "<p class=\"editor-paragraph\">@{body('Create_HTML_table')}</p>"
                                 },
