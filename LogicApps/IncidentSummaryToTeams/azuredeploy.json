@@ -67,10 +67,6 @@
                                 },
                                 "method": "post",
                                 "body": {
-                                    "recipient": {
-                                        "groupId": "[parameters('teamsGroupId')]",
-                                        "channelId": "[parameters('teamsChannelId')]"
-                                    },
                                     "messageBody": "<p class=\"editor-paragraph\">@{body('Create_HTML_table')}</p>"
                                 },
                                 "path": "/beta/teams/conversation/message/poster/Flow bot/location/@{encodeURIComponent('Channel')}",
