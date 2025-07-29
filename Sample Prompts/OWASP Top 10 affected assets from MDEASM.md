@@ -1,6 +1,6 @@
 📅 2025.07.29
 
-<img width="281" height="391" alt="image" src="https://github.com/user-attachments/assets/b26c7b7e-be66-439c-8156-39c340e8e7d0" />
+<img width="562" height="782" alt="image" src="https://github.com/user-attachments/assets/b26c7b7e-be66-439c-8156-39c340e8e7d0" />
 
 # 🔍 Security Copilot에서 MDEASM 데이터를 활용한 답변 예시와 Markdown 응답 형식
 
