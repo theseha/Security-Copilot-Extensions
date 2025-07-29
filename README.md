@@ -6,6 +6,8 @@ Security Copilot은 기본적으로 서비스형 소프트웨어(SaaS) 기반 �
 
 여기에서 Security Copilot를 보완할 수 있는 몇 가지 팁을 확인할 수 있습니다.
 
+---
+
 As of 1st April 2024, Microsoft Security Copilot has been generally available, which will help security team in 3 ways, Scalability, Speed and Skill.
 
 Security Copilot is basically Software-as-a-Service (SaaS) based security solution, but it functions as a platform to amplify its capability by adding plugins, by being utilized as a connector of Logic Apps and by integrating users's own Knowledge Base.
