@@ -1,6 +1,6 @@
 📅 2025.07.29
 
-<img width="349" height="310" alt="image" src="https://github.com/user-attachments/assets/c384c3a5-88d6-40ae-a5fb-9b1b329ceaac" />
+<img width="698" height="620" alt="image" src="https://github.com/user-attachments/assets/c384c3a5-88d6-40ae-a5fb-9b1b329ceaac" />
 
 # 🛠️ 여러 개의 CVE를 입력할 때 유의할 JSON 형식 처리 방법
 
